@@ -5,12 +5,12 @@
 return {
   {
     'github/copilot.vim',
-    opts = {
-      g = {
-        copilot_node_version = 20,
-        copilot_workspace_folders = { '~/projects/wurzelkind' },
-        -- don't use <Tab> for completion
-      },
-    },
+    config = function()
+      -- vim.keymap.set('i', '', 'copilot#Accept("\\<CR>")', { expr = true, replace_keycodes = false })
+      vim.g.copilot_node_command = '/Users/Benno/.nvm/versions/node/v20.11.1/bin/node'
+      vim.g.copilot_workspace_folders = { '~/projects/wurzelkind' }
+      vim.g.copilot_no_tab_map = true
+    end,
   },
+  'fatih/vim-go',
 }
