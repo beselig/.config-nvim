@@ -146,10 +146,10 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 15
 
 -- wrap false
-vim.opt.wrap = false
+vim.opt.wrap = true
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -360,6 +360,18 @@ require('lazy').setup {
             require('telescope.themes').get_dropdown(),
           },
         },
+        defaults = {
+          layout_config = {
+            width = 0.9,
+            height = 0.9,
+            preview_width = 0.8,
+          },
+        },
+        pickers = {
+          find_files = {
+            previewer = false,
+          },
+        },
       }
 
       -- Enable telescope extensions, if they are installed
@@ -538,8 +550,8 @@ require('lazy').setup {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
+        gopls = {},
+        pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -547,7 +559,7 @@ require('lazy').setup {
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
+        tsserver = {},
         --
 
         lua_ls = {
@@ -619,6 +631,8 @@ require('lazy').setup {
       },
       formatters_by_ft = {
         lua = { 'stylua' },
+        python = { 'isort', 'black' },
+
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -645,6 +659,9 @@ require('lazy').setup {
           end
           return 'make install_jsregexp'
         end)(),
+        config = function()
+          require('luasnip.loaders.from_vscode').lazy_load()
+        end,
       },
       'saadparwaiz1/cmp_luasnip',
 
@@ -692,7 +709,7 @@ require('lazy').setup {
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
           --  completions whenever it has completion options available.
-          ['<C-Space>'] = cmp.mapping.complete {},
+          ['<C-.>'] = cmp.mapping.complete {},
 
           -- Think of <c-l> as moving to the right of your snippet expansion.
           --  So if you have a snippet that's like:
@@ -815,7 +832,7 @@ require('lazy').setup {
   --  uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.indent_line',
 
   -- note: the import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    this is the easiest way to modularize your config.
