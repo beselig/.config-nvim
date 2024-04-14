@@ -236,7 +236,6 @@ require('lazy').setup {
   --
   --  This is equivalent to:
   --    require('Comment').setup({})
-
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
 
@@ -361,11 +360,11 @@ require('lazy').setup {
           },
         },
         defaults = {
-          layout_config = {
-            width = 0.9,
-            height = 0.9,
-            preview_width = 0.8,
-          },
+          -- layout_config = {
+          --   width = 0.9,
+          --   height = 0.9,
+          --   preview_width = 0.8,
+          -- },
         },
         pickers = {
           find_files = {
@@ -560,7 +559,6 @@ require('lazy').setup {
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
         tsserver = {},
-        --
 
         lua_ls = {
           -- cmd = {...},
@@ -638,7 +636,8 @@ require('lazy').setup {
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
+        javascript = { { 'prettierd', 'prettier' } },
+        typescript = { { 'prettierd', 'prettier' } },
       },
     },
   },
@@ -739,6 +738,23 @@ require('lazy').setup {
     end,
   },
 
+  -- { -- You can easily change to a different colorscheme.
+  --   -- Change the name of the colorscheme plugin below, and then
+  --   -- change the command in the config to whatever the name of that colorscheme is
+  --   --
+  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
+  --   'catppuccin/nvim',
+  --   name = 'catppuccin',
+  --   lazy = false, -- make sure we load this during startup if it is your main colorscheme
+  --   priority = 1001, -- make sure to load this before all the other start plugins
+  --   opts = {
+  --     background = { light = 'mocha', dark = 'mocha' },
+  --   },
+  --   config = function()
+  --     vim.cmd.colorscheme 'catppuccin'
+  --     vim.opt_global.background = 'light'
+  --   end,
+  -- },
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is
@@ -751,7 +767,7 @@ require('lazy').setup {
       -- load the colorscheme here.
       -- like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'tokyonight-moon'
 
       -- you can configure highlights by doing something like
       vim.cmd.hi 'comment gui=none'
@@ -835,7 +851,7 @@ require('lazy').setup {
   require 'kickstart.plugins.indent_line',
 
   -- note: the import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    this is the easiest way to modularize your config.
+  --    this is the easiest way to modularizie your config.
   --
   --  uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    for additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
