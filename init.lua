@@ -63,6 +63,18 @@ vim.keymap.set('n', '<leader>pv', function()
   vim.cmd 'Explore'
 end)
 
+vim.keymap.set('n', '<leader>1', '1gt')
+vim.keymap.set('n', '<leader>2', '2gt')
+vim.keymap.set('n', '<leader>3', '3gt')
+vim.keymap.set('n', '<leader>4', '4gt')
+vim.keymap.set('n', '<leader>5', '5gt')
+vim.keymap.set('n', '<leader>6', '6gt')
+vim.keymap.set('n', '<leader>7', '7gt')
+vim.keymap.set('n', '<leader>8', '8gt')
+vim.keymap.set('n', '<leader>9', '9gt')
+vim.keymap.set('n', '<leader>0', function()
+  vim.cmd { cmd = 'tablast' }
+end)
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -454,6 +466,7 @@ require('lazy').setup {
         --   filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
         -- },
         -- volar = {},
+        html = {},
 
         lua_ls = {
           -- cmd = {...},
@@ -553,6 +566,8 @@ require('lazy').setup {
         -- is found.
         javascript = { { 'prettierd', 'prettier' } },
         typescript = { { 'prettierd', 'prettier' } },
+        vue = { { 'prettierd', 'prettier' } },
+        html = { { 'prettierd', 'prettier' } },
       },
     },
   },
@@ -623,7 +638,7 @@ require('lazy').setup {
           -- manually trigger a completion from nvim-cmp.
           --  generally you don't need this, because nvim-cmp will display
           --  completions whenever it has completion options available.
-          ['<c-.>'] = cmp.mapping.complete {},
+          ['<c-\\>'] = cmp.mapping.complete {},
 
           -- think of <c-l> as moving to the right of your snippet expansion.
           --  so if you have a snippet that's like:
@@ -653,41 +668,41 @@ require('lazy').setup {
     end,
   },
 
-  -- { -- you can easily change to a different colorscheme.
-  --   -- change the name of the colorscheme plugin below, and then
-  --   -- change the command in the config to whatever the name of that colorscheme is
-  --   --
-  --   -- if you want to see what colorschemes are already installed, you can use `:telescope colorscheme`
-  --   'catppuccin/nvim',
-  --   name = 'catppuccin',
-  --   lazy = false, -- make sure we load this during startup if it is your main colorscheme
-  --   priority = 1001, -- make sure to load this before all the other start plugins
-  --   opts = {
-  --     background = { light = 'mocha', dark = 'mocha' },
-  --   },
-  --   config = function()
-  --     vim.cmd.colorscheme 'catppuccin'
-  --     vim.opt_global.background = 'light'
-  --   end,
-  -- },
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
+  { -- you can easily change to a different colorscheme.
+    -- change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is
     --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
-    'folke/tokyonight.nvim',
+    -- if you want to see what colorschemes are already installed, you can use `:telescope colorscheme`
+    'catppuccin/nvim',
+    name = 'catppuccin',
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
+    priority = 1001, -- make sure to load this before all the other start plugins
+    opts = {
+      background = { light = 'mocha', dark = 'mocha' },
+    },
     config = function()
-      -- load the colorscheme here.
-      -- like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-moon'
-
-      -- you can configure highlights by doing something like
-      vim.cmd.hi 'comment gui=none'
+      vim.cmd.colorscheme 'catppuccin'
+      vim.opt_global.background = 'light'
     end,
   },
+  -- { -- You can easily change to a different colorscheme.
+  --   -- Change the name of the colorscheme plugin below, and then
+  --   -- change the command in the config to whatever the name of that colorscheme is
+  --   --
+  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
+  --   'folke/tokyonight.nvim',
+  --   lazy = false, -- make sure we load this during startup if it is your main colorscheme
+  --   priority = 1000, -- make sure to load this before all the other start plugins
+  --   config = function()
+  --     -- load the colorscheme here.
+  --     -- like many other themes, this one has different styles, and you could load
+  --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+  --     vim.cmd.colorscheme 'tokyonight-moon'
+  --
+  --     -- you can configure highlights by doing something like
+  --     vim.cmd.hi 'comment gui=none'
+  --   end,
+  -- },
 
   -- highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'vimenter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
