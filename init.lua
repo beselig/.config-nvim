@@ -59,9 +59,7 @@ vim.opt.wrap = false
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
-vim.keymap.set('n', '<leader>pv', function()
-  vim.cmd 'Explore'
-end)
+vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 
 vim.keymap.set('n', '<leader>1', '1gt')
 vim.keymap.set('n', '<leader>2', '2gt')
@@ -79,6 +77,7 @@ end)
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('i', 'jj', '<Esc>')
+vim.keymap.set('i', 'kk', '<Esc>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
@@ -241,6 +240,7 @@ require('lazy').setup {
 
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
+      local fb_actions = require('telescope').extensions.file_browser.actions
       require('telescope').setup {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
@@ -254,6 +254,13 @@ require('lazy').setup {
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
+          },
+          file_browser = {
+            mapping = {
+              -- ["i"] = {
+
+              -- }
+            },
           },
         },
         defaults = {
@@ -273,6 +280,12 @@ require('lazy').setup {
       -- Enable telescope extensions, if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
+      pcall(require('telescope').load_extension, 'file_browser')
+
+      -- telescope file browser keymaps
+      vim.keymap.set('n', '<space>fb', ':Telescope file_browser<CR>')
+      -- open file_browser with the path of the current buffer
+      vim.keymap.set('n', '<space>ff', ':Telescope file_browser path=%:p:h select_buffer=true<CR>')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -311,7 +324,8 @@ require('lazy').setup {
         print(vim.fn.stdpath 'config')
       end, { desc = '[S]earch [N]eovim files' })
       vim.keymap.set('n', '<leader>sc', function()
-        local config_dir = (os.getenv 'XDF_CONFIG_PATH' or os.getenv 'HOME') .. '/.config'
+        local config_dir = os.getenv 'XDG_CONFIG_HOME' or (os.getenv 'HOME' .. '/.config')
+        print(config_dir, os.getenv(XDG))
         builtin.find_files { cwd = config_dir }
       end, { desc = '[S]earch [C]onfig files' })
     end,
@@ -523,6 +537,26 @@ require('lazy').setup {
           end,
         },
       }
+
+      -- setting up tsserver to work with vue
+      local mason_registry = require 'mason-registry'
+      local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
+      local lspconfig = require 'lspconfig'
+      lspconfig.tsserver.setup {
+        init_options = {
+          plugins = {
+            {
+              name = '@vue/typescript-plugin',
+              location = vue_language_server_path,
+              languages = { 'vue' },
+            },
+          },
+        },
+        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+      }
+
+      -- no need to set `hybridmode` to `true` as it's the default value
+      lspconfig.volar.setup {}
     end,
   },
 
@@ -545,6 +579,8 @@ require('lazy').setup {
         -- is found.
         javascript = { { 'prettierd', 'prettier' } },
         typescript = { { 'prettierd', 'prettier' } },
+        javascriptreact = { { 'prettierd', 'prettier' } },
+        typescriptreact = { { 'prettierd', 'prettier' } },
         vue = { { 'prettierd', 'prettier' } },
         html = { { 'prettierd', 'prettier' } },
       },
@@ -676,6 +712,7 @@ require('lazy').setup {
       -- load the colorscheme here.
       -- like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+      -- vim.cmd.colorscheme 'tokyonight-day'
       vim.cmd.colorscheme 'tokyonight-moon'
 
       -- you can configure highlights by doing something like
