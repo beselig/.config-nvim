@@ -52,7 +52,7 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 99999
+vim.opt.scrolloff = 10
 
 -- wrap false
 vim.opt.wrap = false
@@ -240,7 +240,6 @@ require('lazy').setup {
 
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
-      local fb_actions = require('telescope').extensions.file_browser.actions
       require('telescope').setup {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
@@ -255,13 +254,7 @@ require('lazy').setup {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
-          file_browser = {
-            mapping = {
-              -- ["i"] = {
-
-              -- }
-            },
-          },
+          file_browser = {},
         },
         defaults = {
           -- layout_config = {
@@ -330,6 +323,25 @@ require('lazy').setup {
       end, { desc = '[S]earch [C]onfig files' })
     end,
   },
+
+  -- vue syntax
+  -- { 'posva/vim-vue' },
+  --
+  -- { 'neoclide/coc.nvim' },
+  -- {
+  --   'yaegassy/coc-volar',
+  --   setup = function()
+  --     vim.cmd 'yarn install --frozen-lockfile'
+  --   end,
+  -- },
+  --
+  -- {
+  --   'yaegassy/coc-volar-tools',
+  --   setup = function()
+  --     vim.cmd 'yarn install --frozen-lockfile'
+  --   end,
+  -- },
+  -- end vue
 
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -522,6 +534,7 @@ require('lazy').setup {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format lua code
+        'tailwindcss-language-server',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -538,7 +551,7 @@ require('lazy').setup {
         },
       }
 
-      -- setting up tsserver to work with vue
+      -- -- setting up tsserver to work with vue
       local mason_registry = require 'mason-registry'
       local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
       local lspconfig = require 'lspconfig'
@@ -552,11 +565,11 @@ require('lazy').setup {
             },
           },
         },
-        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+        filetypes = { 'vue' },
       }
-
-      -- no need to set `hybridmode` to `true` as it's the default value
-      lspconfig.volar.setup {}
+      --
+      -- -- no need to set `hybridmode` to `true` as it's the default value
+      lspconfig.volar.setup = {}
     end,
   },
 
@@ -583,6 +596,8 @@ require('lazy').setup {
         typescriptreact = { { 'prettierd', 'prettier' } },
         vue = { { 'prettierd', 'prettier' } },
         html = { { 'prettierd', 'prettier' } },
+        css = { { 'prettierd', 'prettier' } },
+        json = { { 'prettierd', 'prettier' } },
       },
     },
   },
@@ -653,7 +668,7 @@ require('lazy').setup {
           -- manually trigger a completion from nvim-cmp.
           --  generally you don't need this, because nvim-cmp will display
           --  completions whenever it has completion options available.
-          ['<c-\\>'] = cmp.mapping.complete {},
+          ['<c-x c-o>'] = cmp.mapping.complete {},
 
           -- think of <c-l> as moving to the right of your snippet expansion.
           --  so if you have a snippet that's like:
@@ -682,29 +697,18 @@ require('lazy').setup {
       }
     end,
   },
-
-  -- { -- you can easily change to a different colorscheme.
-  --   -- change the name of the colorscheme plugin below, and then
-  --   -- change the command in the config to whatever the name of that colorscheme is
-  --   --
-  --   -- if you want to see what colorschemes are already installed, you can use `:telescope colorscheme`
-  --   'catppuccin/nvim',
-  --   name = 'catppuccin',
-  --   lazy = false, -- make sure we load this during startup if it is your main colorscheme
-  --   priority = 1001, -- make sure to load this before all the other start plugins
-  --   opts = {
-  --     background = { light = 'mocha', dark = 'mocha' },
-  --   },
+  -- {
+  --   'projekt0n/github-nvim-theme',
+  --   lazy = false,
+  --   priority = 1001,
   --   config = function()
-  --     vim.cmd.colorscheme 'catppuccin'
-  --     vim.opt_global.background = 'light'
+  --     -- setup must be called before loading
+  --     vim.cmd 'colorscheme github_dark'
+  --     -- vim.cmd 'colorscheme github_light'
   --   end,
   -- },
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
+
+  { -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
     'folke/tokyonight.nvim',
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
