@@ -1,5 +1,6 @@
 return {
   'Robitx/gp.nvim',
+  enabled = false,
   config = function()
     local config = {
       openai_api_key = os.getenv 'OPEN_API_KEY',

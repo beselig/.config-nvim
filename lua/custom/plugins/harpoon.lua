@@ -2,6 +2,7 @@ return {
   {
     'ThePrimeagen/harpoon',
     dependencies = { 'nvim-lua/plenary.nvim' },
+    enabled = true,
     config = function()
       require('telescope').load_extension 'harpoon'
       local mark = require 'harpoon.mark'
