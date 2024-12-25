@@ -11,14 +11,14 @@ require 'config.lazy'
 vim.keymap.set('n', '<leader><leader>x', '<cmd>source %<CR>')
 vim.keymap.set('n', '<leader>x', ':.lua<CR>')
 vim.keymap.set('v', '<leader>x', ':lua<CR>')
-
 -- keymaps for Oil
+
 local oil = require 'oil'
 if oil then
-  vim.keymap.set('n', '_', '<CMD>Oil --float<CR>', { desc = 'Open parent directory in floating window' })
-  vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+	vim.keymap.set('n', '_', '<CMD>Oil --float<CR>', { desc = 'Open parent directory in floating window' })
+	vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 else
-  error 'Cannot set keymaps for Oil when Oil is not loaded'
+	error 'Cannot set keymaps for Oil when Oil is not loaded'
 end
 
 -- [[ OPTIONS ]] --
@@ -57,7 +57,8 @@ vim.opt.timeoutlen = 300
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = '  ', trail = '·', nbsp = '␣' }
+-- vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -87,21 +88,13 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagn
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
--- [[ AUTOCOMMANDS ]] -- 
--- vim.api.nvim_create_autocmd "" { desc= "" }
--- vim.api.nvim_create_autocmd('BufWritePre', {
---     desc = "Format on save",
---     callback = function(args)
---
--- 	vim.buf.lsp.format()
---     end
--- })
--- auto commands
+-- LSP keymaps
+vim.keymap.set('i', '<M-CR>', vim.lsp.buf.code_action)
 
 vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
+	desc = 'Highlight when yanking (copying) text',
+	group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+	callback = function()
+		vim.highlight.on_yank()
+	end,
 })
