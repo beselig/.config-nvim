@@ -52,7 +52,6 @@ return {
       require('lspconfig').volar.setup({
         -- add filetypes for typescript, javascript and vue
         filetypes = {
-          'typescript', 'javascript', 'javascriptreact', 'typescriptreact',
           'vue'
         },
         init_options = {
