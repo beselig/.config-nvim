@@ -25,11 +25,19 @@ return {
         }
       },
       extensions = {
-        fzf = {}
+        fzf = {},
+        ["ui-select"] = {
+          require("telescope.themes").get_dropdown {
+            -- even more opts
+          }
+
+        }
       }
     }
 
+    -- load extensions
     require('telescope').load_extension('fzf')
+    require("telescope").load_extension("ui-select")
 
     -- local themes = require('telescope.themes')
     local builtin = require('telescope.builtin')

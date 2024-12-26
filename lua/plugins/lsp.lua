@@ -38,6 +38,34 @@ return {
           end
         end,
       })
+
+      local npm_root_g_dir = require('config.lsp.npm').get_npm_root()
+      local vue_language_server_location = npm_root_g_dir .. '/@vue/languge-server'
+      local vue_typescript_plugin_location = npm_root_g_dir .. '/@vue/typescript-plugin'
+      print(vue_language_server_location)
+
+      -- typescript
+      require 'lspconfig'.ts_ls.setup {
+        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact' },
+      }
+
+      -- vue
+      require('lspconfig').volar.setup({
+        -- add filetypes for typescript, javascript and vue
+        filetypes = {
+          'typescript', 'javascript', 'javascriptreact', 'typescriptreact',
+          'vue'
+        },
+        init_options = {
+          vue = {
+            -- disable hybrid mode
+            hybridMode = false,
+          },
+        },
+      })
+
+      -- load some custom utility functions
+      require('config.lsp.utils')
     end,
   }
 }
