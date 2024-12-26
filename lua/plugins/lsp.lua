@@ -44,9 +44,10 @@ return {
       -- local vue_typescript_plugin_location = npm_root_g_dir .. '/@vue/typescript-plugin'
 
       -- typescript
-      require 'lspconfig'.ts_ls.setup {
-        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact' },
-      }
+      -- see typescript-tools.lua
+      -- require 'lspconfig'.ts_ls.setup {
+      --   filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact' },
+      -- }
 
       -- vue
       require('lspconfig').volar.setup({

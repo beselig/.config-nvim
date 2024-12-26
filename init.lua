@@ -73,14 +73,19 @@ vim.opt.scrolloff = 50
 vim.opt.wrap = false
 
 -- [[ KEYMAPS ]] --
+-- exist insert mode through j / k
+vim.keymap.set('i', 'jj', '<Esc>')
+vim.keymap.set('i', 'kk', '<Esc>')
+
 --  Use CTRL+<hjkl> to switch between windows (See `:help wincmd`)
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
-vim.keymap.set('i', 'jj', '<Esc>')
-vim.keymap.set('i', 'kk', '<Esc>')
+-- Navigating quickfix
+vim.keymap.set('n', '<M-j>', '<cmd>cnext<CR>')
+vim.keymap.set('n', '<M-k>', '<cmd>cprev<CR>')
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
@@ -99,3 +104,5 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+require('config.terminal')
