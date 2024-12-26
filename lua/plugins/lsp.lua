@@ -39,10 +39,9 @@ return {
         end,
       })
 
-      local npm_root_g_dir = require('config.lsp.npm').get_npm_root()
-      local vue_language_server_location = npm_root_g_dir .. '/@vue/languge-server'
-      local vue_typescript_plugin_location = npm_root_g_dir .. '/@vue/typescript-plugin'
-      print(vue_language_server_location)
+      -- local npm_root_g_dir = require('config.lsp.npm').get_npm_root()
+      -- local vue_language_server_location = npm_root_g_dir .. '/@vue/languge-server'
+      -- local vue_typescript_plugin_location = npm_root_g_dir .. '/@vue/typescript-plugin'
 
       -- typescript
       require 'lspconfig'.ts_ls.setup {
