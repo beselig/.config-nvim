@@ -13,12 +13,12 @@ vim.keymap.set('n', '<leader>x', ':.lua<CR>')
 vim.keymap.set('v', '<leader>x', ':lua<CR>')
 -- keymaps for Oil
 
-local oil = require 'oil'
+local oil = pcall(require, 'oil')
 if oil then
-	vim.keymap.set('n', '_', '<CMD>Oil --float<CR>', { desc = 'Open parent directory in floating window' })
-	vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+  vim.keymap.set('n', '_', '<CMD>Oil --float<CR>', { desc = 'Open parent directory in floating window' })
+  vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
 else
-	error 'Cannot set keymaps for Oil when Oil is not loaded'
+  vim.notify('init.lua: Cannot set keymaps for Oil when Oil is not loaded', vim.log.levels.WARN)
 end
 
 -- [[ OPTIONS ]] --
@@ -90,11 +90,12 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 -- LSP keymaps
 vim.keymap.set('i', '<M-CR>', vim.lsp.buf.code_action)
+vim.keymap.set('i', 'gd', vim.lsp.buf.definition)
 
 vim.api.nvim_create_autocmd('TextYankPost', {
-	desc = 'Highlight when yanking (copying) text',
-	group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })
