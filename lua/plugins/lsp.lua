@@ -1,22 +1,37 @@
 return {
   {
     "neovim/nvim-lspconfig",
-    dependencies = { {
-      "folke/lazydev.nvim",
-      ft = "lua", -- only load on lua files
-      opts = {
-        library = {
-          -- See the configuration section for more details
-          -- Load luvit types when the `vim.uv` word is found
-          { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+    dependencies = {
+      {
+        'pmizio/typescript-tools.nvim',
+        dependencies = {
+          {
+            'nvim-lua/plenary.nvim',
+            'neovim/nvim-lspconfig'
+          },
+        }
+      },
+      {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+          library = {
+            -- See the configuration section for more details
+            -- Load luvit types when the `vim.uv` word is found
+            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+          },
         },
       },
-    },
+      {
+        "saghen/blink.cmp"
+      }
     },
     config = function()
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
       -- `:help lspconfig-all` find your language server e.g. 'lua_ls' and check install instructions
       -- install the language server and make sure it's executable `:echo executable('lua-language-server')`
       require("lspconfig").lua_ls.setup({
+        capabilities = capabilities,
         format = {
           indent_size = 2
         }
@@ -59,6 +74,7 @@ return {
 
       -- vue
       require('lspconfig').volar.setup({
+        capabilities = capabilities,
         -- add filetypes for typescript, javascript and vue
         filetypes = {
           'vue'
@@ -75,8 +91,22 @@ return {
         },
       })
 
+      -- typescript-tools
+      require('typescript-tools').setup {
+        capabilities = capabilities,
+        filetypes = {
+          'javascript',
+          'javascriptreact',
+          'typescript',
+          'typescriptreact',
+        },
+        settings = {
+          expose_as_code_action = { 'add_missing_imports', 'remove_unused' },
+        },
+      }
+
       -- load some custom utility functions
       require('config.lsp.utils')
     end,
-  }
+  },
 }
