@@ -49,6 +49,14 @@ return {
       --   filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact' },
       -- }
 
+      local node_modules_dir = vim.fn.finddir('node_modules', vim.fn.stdpath('config'))
+      if not node_modules_dir then
+        vim.notify(
+          'make sure to run npm install inside ' ..
+          vim.fn.stdpath('config') .. ' or volar and ts_ls might not work properly',
+          vim.log.levels.WARN)
+      end
+
       -- vue
       require('lspconfig').volar.setup({
         -- add filetypes for typescript, javascript and vue
@@ -56,6 +64,10 @@ return {
           'vue'
         },
         init_options = {
+          typescript = {
+            -- replace with your global TypeScript library path
+            tsdk = vim.fn.getcwd() .. '/node_modules/typescript/lib'
+          },
           vue = {
             -- disable hybrid mode
             hybridMode = false,
