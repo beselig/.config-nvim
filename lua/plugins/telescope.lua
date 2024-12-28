@@ -47,7 +47,7 @@ return {
     vim.keymap.set("n", "<space>sn", function()
       builtin.find_files { cwd = vim.fn.stdpath "config" }
     end)
-    vim.keymap.set('n', '<space>ep', function()
+    vim.keymap.set('n', '<space>sp', function()
       builtin.find_files {
         ---@diagnostic disable-next-line: param-type-mismatch
         cwd = vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy')

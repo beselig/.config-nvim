@@ -49,6 +49,7 @@ end
 
 M.setup = function()
   vim.keymap.set('n', "<leader>sg", live_multigrep)
+  vim.keymap.set('n', "<leader>sp", function() live_multigrep({ cwd = vim.fn.stdpath('data') }) end)
 end
 
 
