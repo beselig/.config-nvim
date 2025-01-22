@@ -1,5 +1,3 @@
-print 'Jolly! How good to see ya! <3'
-
 require 'kickstart.health'
 
 vim.g.mapleader = ' '
@@ -67,6 +65,9 @@ vim.opt.inccommand = 'split'
 -- Show which line your cursor is on
 vim.opt.cursorline = true
 
+-- cursor style
+vim.opt.guicursor = 'n-v-c-i:block'
+
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 50
 
@@ -75,8 +76,8 @@ vim.opt.wrap = false
 
 -- [[ KEYMAPS ]] --
 -- exist insert mode through j / k
-vim.keymap.set('i', 'jj', '<Esc>')
-vim.keymap.set('i', 'kk', '<Esc>')
+vim.keymap.set('i', 'jj', '<Esc>j')
+vim.keymap.set('i', 'kk', '<Esc>k')
 
 --  Use CTRL+<hjkl> to switch between windows (See `:help wincmd`)
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
@@ -98,6 +99,12 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('i', '<M-CR>', vim.lsp.buf.code_action)
 vim.keymap.set('i', 'gd', vim.lsp.buf.definition)
 
+-- macro keymaps
+vim.keymap.set('v', '@', '":norm @" . getcharstr() . "<cr>"', { expr = true })
+vim.keymap.set('n', '<M-q>', function()
+  vim.cmd ':bd'
+end)
+
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -106,4 +113,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-require('config.terminal')
+require 'config.terminal'
+
+vim.notify 'Never forget: Do things the wrong way.'

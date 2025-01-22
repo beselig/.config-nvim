@@ -43,7 +43,7 @@ vim.opt.splitbelow = false
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = '  ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -674,7 +674,7 @@ require('lazy').setup {
         -- autoinstall languages that are not installed
         auto_install = true,
         highlight = { enable = true },
-        indent = { enable = true },
+        -- indent = { enable = true },
       }
 
       -- there are additional nvim-treesitter modules that you can use to interact

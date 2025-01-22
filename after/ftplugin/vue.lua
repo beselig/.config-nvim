@@ -17,3 +17,5 @@
 --
 -- -- no need to set `hybridmode` to `true` as it's the default value
 -- lspconfig.volar.setup {}
+
+vim.opt_local.commentstring = '//%s'
